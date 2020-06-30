@@ -9,11 +9,19 @@ android {
         minSdkVersion 4
         targetSdkVersion 22
 
-        ndk {
-            moduleName "libjackpal-androidterm5"
-            abiFilters 'armeabi', 'mips', 'x86'
-            ldLibs "log"
+        externalNativeBuild {
+            cmake {
+//                cppFlags "-std=c++11"
+                abiFilters 'armeabi-v7a'
+
+            }
         }
+
+//        ndk {
+//            moduleName "libjackpal-androidterm5"
+//            abiFilters 'armeabi', 'mips', 'x86'
+//            ldLibs "log"
+//        }
     }
 
     compileOptions {
@@ -27,9 +35,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/jni/CMakeLists.txt')
+            version "3.10.2"
+
+
+        }
+    }
 }
 
 dependencies {
-    compile project(':emulatorview')
-    compile project(':libtermexec')
+    implementation project(':emulatorview')
+    implementation project(':libtermexec')
 }
